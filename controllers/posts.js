@@ -1,6 +1,8 @@
 import PostMessage from "../model/postMessage.js";
 // import express from "express";
 import mongoose from "mongoose";
+import cloudinary from "cloudinary";
+
 export const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMessage.find();
@@ -12,10 +14,16 @@ export const getPosts = async (req, res) => {
 
 export const createPosts = async (req, res) => {
   const { title, message, selectedFile, creator, tags } = req.body;
+  const myCloud = await cloudinary.uploader.upload(req.body.selectedFile, {
+    folder: "todoapp",
+  });
   const newPostMessage = new PostMessage({
     title,
     message,
-    selectedFile,
+    selectedFile: {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    },
     creator,
     tags,
   });
@@ -59,11 +67,16 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-  
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with id: ${id}`);
+
   const post = await PostMessage.findById(id);
 
-  const updatedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
-  
+  const updatedPost = await PostMessage.findByIdAndUpdate(
+    id,
+    { likeCount: post.likeCount + 1 },
+    { new: true }
+  );
+
   res.json(updatedPost);
-}
+};
