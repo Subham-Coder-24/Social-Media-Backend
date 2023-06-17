@@ -16,12 +16,12 @@ app.use((req, res, next) => {
 });
 app.use(
   cors({
-    origin: "https://frabjous-paprenjak-53569d.netlify.app/posts",
+    origin: "https://frabjous-paprenjak-53569d.netlify.app/",
     credentials: true,
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://frabjous-paprenjak-53569d.netlify.app/posts");
+  res.setHeader("Access-Control-Allow-Origin", "https://frabjous-paprenjak-53569d.netlify.app/");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,OPTIONS,PATCH,DELETE,POST,PUT"
