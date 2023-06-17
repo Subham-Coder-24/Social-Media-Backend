@@ -16,12 +16,12 @@ app.use((req, res, next) => {
 });
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://648e2b7a11e1f64a3464fcf4--frabjous-paprenjak-53569d.netlify.app",
     credentials: true,
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "https://648e2b7a11e1f64a3464fcf4--frabjous-paprenjak-53569d.netlify.app");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,OPTIONS,PATCH,DELETE,POST,PUT"
